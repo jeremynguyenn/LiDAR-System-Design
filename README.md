@@ -16,3 +16,21 @@ To enhance the coverage of a limited-angle 3D LiDAR sensor, a servo motor-driven
 | 3D LiDAR Rotation System              | Visualization on Rviz               |
 
 ---
+
+## Mechanical Design and Manufacturing
+The electromechanical system  was designed using Autodesk Fusion 360 and features a robust frame constructed from aluminum profiles. The design incorporates several components manufactured with a 3D printer, ensuring the system’s mechanical integrity and adaptability.
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/CAD1.png) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/CAD2%20(1).png) | ![Visualization](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/physical_system.gif) |
+|:-----------------------------------:|:-------------------------------------:|:-------------------------------------:|
+| CAD File                  | CAD File                       | Physical system and Rviz                |
+
+
+## System Architecture
+In this ROS-based system, the integration of a 3D LiDAR rotation mechanism with a SICK MRS 1000 sensor, an IMU, and a servo motor is implemented. The /mcu_imu_gps_servo node orchestrates servo motor positioning and IMU data collection. Raw LiDAR point clouds are published by the /sick_mrs_1xxx node on /cloud. Servo position decoding is managed via /nt16_to_servo_pos and transmitted through /servo_pos_header. Real-time coordinate frame alignment is achieved using /imu_tf_broadcaster and /LIDAR_tf_broadcaster, both publishing to /tf. The /pointCloud_transformer node transforms the raw point cloud data into a global frame, outputting it as /transformed_cloud. Visualization and monitoring are performed in real time using RViz, facilitating system validation and environmental modeling.
+
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/rosgraph.png) | 
+|------------------------------------|
+| RQT GRAPH                          |
+
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/frame_tree.png) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/frames.png) |
+|------------------------------------|------------------------------------|
+| TF Tree              | Frames on Rviz               |
