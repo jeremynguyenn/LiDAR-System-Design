@@ -34,3 +34,67 @@ In this ROS-based system, the integration of a 3D LiDAR rotation mechanism with 
 | ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/frame_tree.png) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/frames.png) |
 |------------------------------------|------------------------------------|
 | TF Tree              | Frames on Rviz               |
+
+## Installation
+```bash
+# Create a ROS workspace
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+
+# Clone the repository
+git clone https://github.com/jeremynguyenn/LiDAR-System-Design.git
+
+# Navigate to the workspace and build the project
+cd ~/catkin_ws
+catkin_make
+
+# Source the workspace
+source devel/setup.bash
+```
+
+## Usage
+This setup represents a complete pipeline for the 3D LiDAR rotation system. By running these launch files together, the system integrates servo control, IMU data fusion, LiDAR scanning, and visualization, creating a functional and real-time 3D mapping platform.
+   
+1. imu_gps_servo.launch handles servo control, IMU and GPS data via rosserial.
+```bash
+roslaunch lidar_rotation imu_gps_servo.launch
+```
+2. tf_imu_lidar.launch manages the frame transformations.
+```bash
+roslaunch lidar_rotation tf_imu_lidar.launch
+```
+3. visualization.launch provides custom Rviz setup for monitoring the system in real-time using markers and PointCloud.
+```bash
+roslaunch lidar_rotation visualization.launch
+```
+4. sick_mrs_1xxx.launch handles raw LiDAR data collection and streaming.
+```bash
+roslaunch sick_scan sick_mrs_1xxx.launch
+```
+For more details or to download the official SICK drivers, visit the [sic_scan](https://github.com/SICKAG/sick_scan) and [sic_scan_xd](https://github.com/SICKAG/sick_scan_xd) repositories.
+
+Bag File
+
+This project includes a ROS bag file containing recorded data from the LiDAR rotation system. The bag file provides synchronized 3D point cloud data and servo motor position information, which can be used to analyze and visualize the LiDAR's performance in capturing the environment. By replaying this bag file in a ROS environment, users can simulate the system's functionality and test algorithms for 3D mapping, environment perception, and data processing without requiring the physical setup. This allows for a better understanding of the LiDAR's rotational capabilities and its application in real-world scenarios.
+
+Use rosbag terminal tool to replaying the bag file
+```bash
+rosbag play tf_transformation_visualization.bag 
+```
+Using visualization launch file you can visualize movements and sensor readings
+```bash
+roslaunch lidar_rotation visualization.launch
+```
+
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/terminal_setup.png) | 
+|------------------------------------|
+| Terminal Setup                     |
+
+## Visualization
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/gif0.gif) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/gif1.gif) |
+|------------------------------------|------------------------------------|
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/gif3.gif) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/gif4.gif) |
+## Results
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/face.png) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/indoor.png) |
+|------------------------------------|------------------------------------|
+| ![LiDAR System](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/segmantation.png) | ![LiDAR in Action](https://github.com/jeremynguyenn/LiDAR-System-Design/blob/main/3D-LiDAR-Rotation-System-Design/images/human.png) |
